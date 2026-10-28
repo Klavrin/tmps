@@ -30,6 +30,17 @@ public abstract class Account {
 
   public abstract String getAccountType();
 
+  /**
+   * <b>Creational pattern: Prototype.</b> Creates a new account with the same
+   * settings, a new account number and a new owner. The balance starts at zero.
+   */
+  public abstract Account copy(String newAccountNumber, String newOwnerName);
+
+  /** Convenience overload that keeps the current owner. */
+  public final Account copy(String newAccountNumber) {
+    return copy(newAccountNumber, ownerName);
+  }
+
   protected final void reduceBalance(BigDecimal amount) {
     balance = balance.subtract(amount);
   }

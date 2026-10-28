@@ -32,6 +32,11 @@ public class CheckingAccount extends WithdrawableAccount {
         return "Checking";
     }
 
+    @Override
+    public Account copy(String newAccountNumber, String newOwnerName) {
+        return new CheckingAccount(newAccountNumber, newOwnerName, getInterestPolicy(), overdraftLimit);
+    }
+
     public BigDecimal getOverdraftLimit() {
         return overdraftLimit;
     }

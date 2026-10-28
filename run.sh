@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Compiles every .java file in src/ into out/ and starts the app.
-# Pass --demo to print the scripted SOLID walkthrough instead.
+# Pass --demo for the SOLID walkthrough or --creational for the design-pattern demo.
 set -euo pipefail
 cd "$(dirname "$0")"
 

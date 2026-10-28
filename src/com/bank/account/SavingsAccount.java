@@ -32,6 +32,11 @@ public class SavingsAccount extends WithdrawableAccount {
         return "Savings";
     }
 
+    @Override
+    public Account copy(String newAccountNumber, String newOwnerName) {
+        return new SavingsAccount(newAccountNumber, newOwnerName, getInterestPolicy(), minimumBalance);
+    }
+
     public BigDecimal getMinimumBalance() {
         return minimumBalance;
     }

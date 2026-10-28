@@ -5,6 +5,8 @@ import com.bank.account.CheckingAccount;
 import com.bank.account.FixedDepositAccount;
 import com.bank.account.SavingsAccount;
 import com.bank.account.WithdrawableAccount;
+import com.bank.creational.CreationalDemo;
+import com.bank.creational.singleton.BankConfig;
 import com.bank.exception.InsufficientFundsException;
 import com.bank.exception.InvalidAmountException;
 import com.bank.interest.FixedRateInterest;
@@ -25,6 +27,11 @@ import java.util.List;
 public class Main {
 
   public static void main(String[] args) {
+    if (args.length > 0 && args[0].equals("--creational")) {
+      CreationalDemo.run();
+      return;
+    }
+
     AccountRepository accountRepository = new AccountRepository();
     TransactionRepository transactionRepository = new TransactionRepository();
     AccountNumberGenerator numberGenerator = new AccountNumberGenerator();
@@ -35,7 +42,7 @@ public class Main {
     // new behaviour is PLUGGED IN, not coded into the service - open/close
     // principle
     transactionService.addListener(new ConsoleNotifier());
-    transactionService.addListener(new LargeTransactionAlert(money("10000")));
+    transactionService.addListener(new LargeTransactionAlert(BankConfig.getInstance().largeTransactionThreshold()));
 
     // open accounts
     SavingsAccount alice = new SavingsAccount(

@@ -1,5 +1,7 @@
 # Banking System — SOLID Principles (S, O, L)
 
+> **Lab 1 — Creational Design Patterns:** see [LAB1.md](LAB1.md) and run `./run.sh --creational`.
+
 A small banking system written in plain Java. It shows the first three SOLID principles:
 
 | Letter | Principle | One-line meaning |

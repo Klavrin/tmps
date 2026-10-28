@@ -6,6 +6,7 @@ import com.bank.account.FixedDepositAccount;
 import com.bank.account.SavingsAccount;
 import com.bank.account.WithdrawableAccount;
 import com.bank.console.Ansi;
+import com.bank.creational.singleton.BankConfig;
 import com.bank.exception.InsufficientFundsException;
 import com.bank.exception.InvalidAmountException;
 import com.bank.interest.FixedRateInterest;
@@ -36,7 +37,8 @@ public final class GuidedDemo {
 
         // Open/Closed: new behaviour is PLUGGED IN, not coded into the service.
         bank.transactionService().addListener(new ConsoleNotifier());
-        bank.transactionService().addListener(new LargeTransactionAlert(money("10000")));
+        bank.transactionService().addListener(
+                new LargeTransactionAlert(BankConfig.getInstance().largeTransactionThreshold()));
 
         // ---------------------------------------------------------------
         // 2. Open accounts. Each one gets its interest rule from outside (OCP).

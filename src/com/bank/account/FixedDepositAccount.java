@@ -32,6 +32,11 @@ public class FixedDepositAccount extends Account {
     return "Fixed Deposit (" + termInMonths + " months)";
   }
 
+  @Override
+  public Account copy(String newAccountNumber, String newOwnerName) {
+    return new FixedDepositAccount(newAccountNumber, newOwnerName, getInterestPolicy(), termInMonths);
+  }
+
   public int getTermInMonths() {
     return termInMonths;
   }

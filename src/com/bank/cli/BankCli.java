@@ -2,14 +2,16 @@ package com.bank.cli;
 
 import com.bank.Bank;
 import com.bank.account.Account;
-import com.bank.account.CheckingAccount;
-import com.bank.account.FixedDepositAccount;
-import com.bank.account.SavingsAccount;
 import com.bank.account.WithdrawableAccount;
 import com.bank.console.Ansi;
 import com.bank.console.Terminal;
 import com.bank.console.Ui;
 import com.bank.console.Ui.Option;
+import com.bank.creational.factory.AccountFactory;
+import com.bank.creational.factory.AccountSpec;
+import com.bank.creational.factory.CheckingAccountFactory;
+import com.bank.creational.factory.FixedDepositAccountFactory;
+import com.bank.creational.factory.SavingsAccountFactory;
 import com.bank.interest.FixedRateInterest;
 import com.bank.interest.InterestPolicy;
 import com.bank.interest.NoInterest;
@@ -169,12 +171,19 @@ public class BankCli {
 
         Account account;
         try {
-            String number = bank.numberGenerator().next();
-            account = switch (type) {
-                case 0 -> new SavingsAccount(number, owner, interest, limit);
-                case 1 -> new CheckingAccount(number, owner, interest, limit);
-                default -> new FixedDepositAccount(number, owner, interest, termInMonths);
+            AccountFactory factory = switch (type) {
+                case 0 -> new SavingsAccountFactory();
+                case 1 -> new CheckingAccountFactory();
+                default -> new FixedDepositAccountFactory();
             };
+            AccountSpec spec = new AccountSpec(
+                    bank.numberGenerator().next(),
+                    owner,
+                    interest,
+                    type == 0 ? limit : null,
+                    type == 1 ? limit : null,
+                    type == 2 ? termInMonths : null);
+            account = factory.create(spec);
         } catch (IllegalArgumentException e) {
             status = Ansi.red("✖ " + e.getMessage());
             return;
