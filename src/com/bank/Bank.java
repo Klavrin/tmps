@@ -12,21 +12,22 @@ import com.bank.service.TransactionService;
  * app and the guided demo start from the same setup.
  */
 public record Bank(
-        AccountRepository accountRepository,
-        TransactionRepository transactionRepository,
-        AccountNumberGenerator numberGenerator,
-        TransactionService transactionService,
-        InterestService interestService) {
+    AccountRepository accountRepository,
+    TransactionRepository transactionRepository,
+    AccountNumberGenerator numberGenerator,
+    TransactionService transactionService,
+    InterestService interestService) {
 
-    public static Bank create() {
-        AccountRepository accountRepository = new AccountRepository();
-        TransactionRepository transactionRepository = new TransactionRepository();
-        TransactionService transactionService = new TransactionService(transactionRepository);
-        return new Bank(
-                accountRepository,
-                transactionRepository,
-                new AccountNumberGenerator(),
-                transactionService,
-                new InterestService(accountRepository, transactionService));
-    }
+  public static Bank create() {
+    AccountRepository accountRepository = new AccountRepository();
+    TransactionRepository transactionRepository = new TransactionRepository();
+    TransactionService transactionService = new TransactionService(transactionRepository);
+
+    return new Bank(
+        accountRepository,
+        transactionRepository,
+        new AccountNumberGenerator(),
+        transactionService,
+        new InterestService(accountRepository, transactionService));
+  }
 }
